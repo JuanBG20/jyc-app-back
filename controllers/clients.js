@@ -1,15 +1,33 @@
 const Client = require("../models/client");
 
 const postClients = (req, res) => {
-  res.send("POST");
+  const newClient = new Client(req.body);
+
+  newClient
+    .save()
+    .then((client) => res.status(201).json({ ok: true, client }))
+    .catch((err) => console.log(err));
 };
 
-const getClients = (req, res) => {
-  res.send("GET");
+const getClients = async (req, res) => {
+  const clients = await Client.aggregate([
+    {
+      $match: { deleted: false },
+    },
+    {
+      $sort: { _id: 1 },
+    },
+  ]);
+
+  res.status(200).json({ ok: true, clients });
 };
 
-const deleteClients = (req, res) => {
-  res.send("DELETE");
+const deleteClients = async (req, res) => {
+  const { id } = req.params;
+
+  await Client.findByIdAndUpdate(id, { deleted: true });
+
+  res.status(200).json({ ok: true, message: "Cliente eliminado con éxito" });
 };
 
 module.exports = {

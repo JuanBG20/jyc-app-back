@@ -2,8 +2,11 @@ const mongoose = require("mongoose");
 
 const movementSchema = mongoose.Schema(
   {
-    product: { type: String, required: true },
-    price: { type: Number, required: true },
+    type: { type: String, required: true },
+    amount: { type: Number, required: true },
+    quantity: Number,
+    client_id: { type: Number, ref: "Clients" },
+    product_code: { type: Number, ref: "Products" },
     deleted: { type: Boolean, default: false },
   },
   {
