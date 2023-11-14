@@ -15,7 +15,7 @@ const getProducts = async (req, res) => {
       $match: { deleted: false },
     },
     {
-      $sort: { _id: -1 },
+      $sort: { code: 1 },
     },
   ]);
 

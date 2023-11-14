@@ -15,7 +15,7 @@ const getClients = async (req, res) => {
       $match: { deleted: false },
     },
     {
-      $sort: { _id: 1 },
+      $sort: { id: 1 },
     },
   ]);
 
